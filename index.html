@@ -1,0 +1,117 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Student Study Planner</title>
+<style>
+body {
+  font-family: Arial, sans-serif;
+  background: #f2f5ff;
+  margin: 0;
+  color: #24304a;
+}
+header {
+  background: #3448c5;
+  color: white;
+  padding: 25px 16px;
+  text-align: center;
+}
+main {
+  max-width: 650px;
+  margin: 25px auto;
+  padding: 18px;
+}
+.card {
+  background: white;
+  padding: 20px;
+  margin-bottom: 18px;
+  border-radius: 14px;
+  box-shadow: 0 3px 12px #00000010;
+}
+input, button {
+  padding: 12px;
+  margin: 5px 0;
+  box-sizing: border-box;
+  border-radius: 7px;
+  font-size: 15px;
+}
+input {
+  width: 100%;
+  border: 1px solid #ccd2e5;
+}
+button {
+  border: 0;
+  background: #3448c5;
+  color: white;
+  cursor: pointer;
+}
+li {
+  padding: 9px 0;
+  overflow-wrap: anywhere;
+}
+.done {
+  text-decoration: line-through;
+  color: #657080;
+}
+</style>
+</head>
+<body>
+<header>
+  <h1>Student Study Planner</h1>
+  <p>Plan your study. Track your progress.</p>
+</header>
+<main>
+  <section class="card">
+    <h2>Add a Study Task</h2>
+    <input id="task" placeholder="Enter subject or task">
+    <input id="date" type="date">
+    <button onclick="addTask()">Add Task</button>
+  </section>
+  <section class="card">
+    <h2>My Study Tasks</h2>
+    <p id="count">Tasks completed: 0</p>
+    <ul id="tasks"></ul>
+  </section>
+</main>
+<script>
+let completed = 0;
+
+function addTask() {
+  const task = document.getElementById("task");
+  const date = document.getElementById("date");
+
+  if (!task.value.trim()) {
+    alert("Please enter a study task.");
+    return;
+  }
+
+  const li = document.createElement("li");
+  const label = document.createElement("span");
+  label.textContent = task.value.trim() +
+    (date.value ? " — " + date.value : "");
+
+  const done = document.createElement("button");
+  done.textContent = "Complete";
+  done.style.marginLeft = "8px";
+
+  done.onclick = function() {
+    if (!li.classList.contains("done")) {
+      li.classList.add("done");
+      completed++;
+      document.getElementById("count").textContent =
+        "Tasks completed: " + completed;
+      done.disabled = true;
+    }
+  };
+
+  li.appendChild(label);
+  li.appendChild(done);
+  document.getElementById("tasks").appendChild(li);
+  task.value = "";
+  date.value = "";
+}
+</script>
+</body>
+</html>
